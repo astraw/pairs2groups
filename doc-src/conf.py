@@ -30,6 +30,7 @@ extensions = ['matplotlib.sphinxext.mathmpl',
               #'ipython_console_highlighting',
               #'inheritance_diagram',
               'numpydoc',
+              'github_tools_sphinx',
               ]
 
 
