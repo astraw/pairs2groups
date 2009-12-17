@@ -11,10 +11,10 @@ cp -a _build/html /tmp/gh-pages
 cd ..
 
 git checkout gh-pages
-rm -rf *
+git clean -dxf
+git rm -r *
 cp -a /tmp/gh-pages/* .
-git add .
+find . | xargs git add
 git commit -m "update pages"
 
 git checkout master
-
