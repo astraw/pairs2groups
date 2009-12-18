@@ -244,10 +244,6 @@ def label_homogeneous_groups(populations,
     >>> group_info = label_homogeneous_groups(populations)
     >>> group_info                  # doctest: +SKIP
     {'group_strings': ['a', 'a', 'a', ''], 'groups': [(0, 1, 2)]}
-    >>> result = group_info.items() # order to allow doctest to compare dictionaries
-    >>> result.sort()
-    >>> result
-    [('group_strings', ['a', 'a', 'a', '']), ('groups', [(0, 1, 2)])]
 
     """
     import scipy.stats
