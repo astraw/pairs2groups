@@ -115,7 +115,7 @@ def find_homogeneous_groups( different_pairs, N_items ):
     assert k == len(S)
 
     T = S.copy()
-    different_pairs = set([ util.UnorderedPair((p[0],p[1])) 
+    different_pairs = set([ util.UnorderedPair((p[0],p[1]))
                               for p in different_pairs])
 
     # define the recursive function
