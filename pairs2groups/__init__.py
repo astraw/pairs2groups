@@ -218,8 +218,12 @@ def label_homogeneous_groups(populations,
     -------
 
     group_info : dictionary
-        Two keys are returned: 'groups' specifies the =groups,
-                       group_strings=group_strs )
+
+        These keys are returned: 'groups' specifies the population
+        indices for each group, 'group_strings' assigns letters to
+        each group and returns a list of strings for each item,
+        'p_values' is a matrix of p values, 'medians' is the median of
+        each population.
 
     Examples
     --------
