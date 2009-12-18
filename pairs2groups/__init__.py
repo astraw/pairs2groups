@@ -243,7 +243,12 @@ def label_homogeneous_groups(populations,
     >>> populations = [pop1, pop2, pop3, pop4]
     >>> group_info = label_homogeneous_groups(populations)
     >>> group_info                  # doctest: +SKIP
-    {'group_strings': ['a', 'a', 'a', ''], 'groups': [(0, 1, 2)]}
+    {'p_values': array([[        NaN,  0.578,  0.705 ,  0.        ],
+                        [ 0.578,         NaN,  0.855,  0.        ],
+                        [ 0.705 ,  0.855,         NaN,  0.        ],
+                        [ 0.        ,  0.        ,  0.        ,         NaN]]),
+    'medians': [0.071, -0.010, -0.0156, 2.054],
+    'group_strings': ['a', 'a', 'a', ''], 'groups': [(0, 1, 2)]}
 
     """
     import scipy.stats
