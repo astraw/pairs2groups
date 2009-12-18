@@ -1,3 +1,20 @@
+class UnorderedPair(tuple):
+    """a 2-tuple that hashes the same regardless of order"""
+    def __new__(cls, tup ): #graph, (source, target)):
+        a,b = tup
+        if a <= b:
+            tup = (a,b)
+        else:
+            tup = (b,a)
+        return tuple.__new__(cls, tup)#(source, target))
+    def __repr__(self):
+        return 'UnorderedPair(%s)' % str( (self[0], self[1]) )
+
+def test_UnorderedPair():
+    # the UnorderedPair should be a tuple that returns lowest value first
+    a = UnorderedPair( (10,2) )
+    assert a[0] == 2 and a[1] == 10
+
 def take_not( T, j ):
     """remove jth element of T
 
@@ -79,7 +96,7 @@ def get_all_pairs(S):
     Sl = list(S)
     for i,Si in enumerate(Sl):
         for Sj in Sl[i+1:]:
-            result.append( (Si,Sj) )
+            result.append( UnorderedPair((Si,Sj)) )
     return result
 
 def remove_overlapping_subsets( S ):
