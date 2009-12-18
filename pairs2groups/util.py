@@ -1,3 +1,26 @@
+class memoized(object):
+   """Decorator that caches a function's return value each time it is called.
+   If called later with the same arguments, the cached value is returned, and
+   not re-evaluated.
+   """
+   # From http://wiki.python.org/moin/PythonDecoratorLibrary
+   def __init__(self, func):
+      self.func = func
+      self.cache = {}
+   def __call__(self, *args):
+      try:
+         return self.cache[args]
+      except KeyError:
+         self.cache[args] = value = self.func(*args)
+         return value
+      except TypeError:
+         # uncachable -- for instance, passing a list as an argument.
+         # Better to not cache than to blow up entirely.
+         return self.func(*args)
+   def __repr__(self):
+      """Return the function's docstring."""
+      return self.func.__doc__
+
 class UnorderedPair(tuple):
     """a 2-tuple that hashes the same regardless of order"""
     def __new__(cls, tup ): #graph, (source, target)):
@@ -24,6 +47,7 @@ def take_not( T, j ):
     """
     return [ T[i] for i in range(len(T)) if i!=j ]
 
+@memoized
 def is_list_of_sets_equal(A, B):
     """test whether list of sets A is equal to list of sets B
 
@@ -59,6 +83,7 @@ def is_list_of_sets_equal(A, B):
         return False
     return True
 
+@memoized
 def get_k_element_subsets( k, T ):
     """get all subsets of T of length k
 
@@ -86,6 +111,7 @@ def test_get_k_element_subsets():
     actual = get_k_element_subsets( k, T )
     assert is_list_of_sets_equal(actual,expected)
 
+@memoized
 def get_all_pairs(S):
     """get a list of all pairs of values of S
 
@@ -99,6 +125,7 @@ def get_all_pairs(S):
             result.append( UnorderedPair((Si,Sj)) )
     return result
 
+@memoized
 def remove_overlapping_subsets( S ):
     """given a list of sets S, find the minimal list T of unique sets
     such that every set in S is a subset of a set in T."""
