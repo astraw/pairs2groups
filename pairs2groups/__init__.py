@@ -246,13 +246,17 @@ def label_homogeneous_groups(populations,
 
     """
     import scipy.stats
+    import numpy as np
+
     # create pairwise differences
     n_comparisons = (len(populations)**2 - len(populations))/2
 
     diff_pairs = []
+    p_values = np.nan*np.ones( (len(populations), len(populations)))
+    medians = [ np.median( x ) for x in populations ]
     for i in range(len(populations)):
         for j in range(len(populations)):
-            if not i <= j:
+            if not i < j:
                 continue
             pair = (i,j)
             A = populations[i]
@@ -262,8 +266,9 @@ def label_homogeneous_groups(populations,
             if two_tailed:
                 p = p1*2
             else:
-                p = 1
+                p = p1
 
+            p_values[i,j] = p
             sig = significance_level/n_comparisons # Bonferroni correction
             if p < sig:
                 different = True
@@ -282,6 +287,17 @@ def label_homogeneous_groups(populations,
             if i in groups[j]:
                 mystr += chr( j+ord('a') )
         group_strs.append( mystr )
+
+    # make the p_value matrix symmetric
+    for i in range(len(populations)):
+        for j in range(len(populations)):
+            if not i > j:
+                continue
+            p_values[i,j] = p_values[j,i]
+
     group_info = dict( groups=groups,
-                       group_strings=group_strs )
+                       group_strings=group_strs,
+                       p_values=p_values,
+                       medians=medians,
+                       )
     return group_info
