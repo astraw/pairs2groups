@@ -287,11 +287,18 @@ def label_homogeneous_groups(populations,
 
     group_strs = []
 
+    group_order = -1*np.ones((len(groups),))
     for i in range(len(populations)):
-        mystr = ''
+        mystr = []
         for j in range(len(groups)):
             if i in groups[j]:
-                mystr += chr( j+ord('a') )
+                order = group_order[j]
+                if order==-1:
+                    order = np.max(group_order) + 1
+                    group_order[j] = order
+                mystr += [ chr( order+ord('a') ) ]
+        mystr.sort()
+        mystr = ''.join(mystr)
         group_strs.append( mystr )
 
     # make the p_value matrix symmetric
