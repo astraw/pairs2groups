@@ -201,6 +201,7 @@ def test_find_homogeneous_groups_pathology():
 def label_homogeneous_groups(populations,
                              significance_level=0.05,
                              two_tailed = True,
+                             force_letter = True,
                              ):
     """perform statistical comparisons and call :func:`find_homogeneous_groups`
 
@@ -214,6 +215,8 @@ def label_homogeneous_groups(populations,
         The significance level required to determine two groups different.
     two_tailed : bool, optional
         Whether the comparison is two-tailed.
+    force_letter : bool, optional
+        If true (the default), each population gets assigned a letter
 
     Returns
     -------
@@ -288,17 +291,27 @@ def label_homogeneous_groups(populations,
     group_strs = []
 
     group_order = -1*np.ones((len(groups),))
+    next_group = 0
     for i in range(len(populations)):
         mystr = []
         for j in range(len(groups)):
             if i in groups[j]:
                 order = group_order[j]
                 if order==-1:
-                    order = np.max(group_order) + 1
+                    order = next_group
+                    next_group += 1
                     group_order[j] = order
                 mystr += [ chr( order+ord('a') ) ]
-        mystr.sort()
-        mystr = ''.join(mystr)
+        if len(mystr):
+            mystr.sort()
+            mystr = ''.join(mystr)
+        else:
+            if force_letter:
+                order = next_group
+                next_group += 1
+                mystr = chr( order+ord('a') )
+            else:
+                mystr = ''
         group_strs.append( mystr )
 
     # make the p_value matrix symmetric
