@@ -184,7 +184,7 @@ def test_find_homogeneous_groups():
              ]
     find_homogeneous_groups( diff, N )
 
-def test_find_homogeneous_groups_pathology():
+def test_find_homogeneous_groups_pathology1():
     # I was having trouble with this set of data
 
     diff_pairs = [(0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (1, 5), (1, 6),
@@ -192,6 +192,19 @@ def test_find_homogeneous_groups_pathology():
                   (3, 5), (3, 6), (3, 7), (3, 8), (4, 6), (4, 7), (4, 8),
                   (5, 6), (5, 7), (5, 8), (6, 7), (6, 8), (7, 8)]
     N = 9
+    groups = find_homogeneous_groups( diff_pairs, N )
+    for group in groups:
+        for a,b in diff_pairs:
+            if a in group:
+                assert b not in group
+
+def test_find_homogeneous_groups_pathology2():
+    # I was having trouble with this set of data
+
+    diff_pairs = [(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 8),
+                  (0, 11), (1, 2), (1, 3), (1, 5), (1, 8), (1, 11),
+                  (5, 9), (5, 10), (5, 12), (9, 11)]
+    N = 13
     groups = find_homogeneous_groups( diff_pairs, N )
     for group in groups:
         for a,b in diff_pairs:
