@@ -89,7 +89,7 @@ def test_get_k_element_subsets():
 def get_all_pairs(S):
     """get a list of all pairs of values of S
 
-    >>> get_all_pairs( [0,1,2,3] )
+    >>> [tuple(p) for p in get_all_pairs( [0,1,2,3] )]
     [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
     """
     result = []
