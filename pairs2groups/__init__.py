@@ -307,7 +307,7 @@ def label_homogeneous_groups(populations,
 
     group_strs = []
 
-    group_order = -1*np.ones((len(groups),))
+    group_order = -1*np.ones((len(groups),),dtype=np.int)
     next_group = 0
     for i in range(len(populations)):
         mystr = []
