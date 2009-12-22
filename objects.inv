@@ -3,8 +3,11 @@
 # Version: 0.5
 pairs2groups mod index.html
 pairs2groups.util mod index.html
-pairs2groups.util.memoized class index.html
-pairs2groups.util.UnorderedPair class index.html
-pairs2groups.find_homogeneous_groups function index.html
-pairs2groups.util.take_not function index.html
 pairs2groups.label_homogeneous_groups function index.html
+pairs2groups.util.is_list_of_sets_equal function index.html
+pairs2groups.util.remove_overlapping_subsets function index.html
+pairs2groups.util.take_not function index.html
+pairs2groups.find_homogeneous_groups function index.html
+pairs2groups.util.get_all_pairs function index.html
+pairs2groups.util.get_k_element_subsets function index.html
+pairs2groups.util.UnorderedPair class index.html
