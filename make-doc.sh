@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-!git status > /dev/null && { echo "aborting - repo not clean. try git status"; exit 1; }
+git status > /dev/null && { echo "aborting - repo not clean. try git status"; exit 1; }
 
 rm -rf /tmp/gh-pages
 cd doc-src
