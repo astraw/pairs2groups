@@ -119,22 +119,26 @@ def find_homogeneous_groups( different_pairs, N_items ):
                               for p in different_pairs])
 
     # define the recursive function
-    def _f( T, k ):
+    def _f( T, k, already_descended ):
         this_good_sets = []
         U = util.get_k_element_subsets( k, T )
         m = len(U)
         for i, U_i in enumerate(U):
-            pairs = set(util.get_all_pairs(U_i))
+            if U_i in already_descended:
+                continue
+            else:
+                already_descended.add(U_i)
+            pairs = frozenset(util.get_all_pairs(U_i))
             if len( pairs.intersection( different_pairs )):
                 if k >= 3:
-                    child_good_sets = _f( U_i, k-1 )
+                    child_good_sets = _f( U_i, k-1, already_descended)
                     this_good_sets.extend( child_good_sets )
             else:
                 this_good_sets.append( U_i )
         return this_good_sets
 
     # call the recursive function
-    good_sets = _f(T,k)
+    good_sets = _f(T,k,set())
     # remove non-unique by a round-trip through set
     good_sets = list(set(good_sets))
     final_sets = util.remove_overlapping_subsets( good_sets )
