@@ -71,6 +71,12 @@ B is different than C does not specify the relation between A and C).
 How to construct groups such that every member population of a group
 is not different than the other populations in the group?
 
+Development information
+-----------------------
+
+The source code and issue tracker for this library are at
+http://github.com/astraw/pairs2groups
+
 """
 import pairs2groups.util as util
 
