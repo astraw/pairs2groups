@@ -18,6 +18,12 @@ groups each treatment is a member of. For example, all treatments in
 group 'a' are not statistically significantly different than each
 other.
 
+In this example, treatment 1 is in groups 'a' and 'b'. Therefore, it
+is statistically significantly different from treatment 4, which is
+not in either of these groups. Treatment 1 is not statistically
+significantly different from treatments 2 or 3, which which it shares
+membership in groups 'b' and 'a', respectively.
+
 .. plot::
 
    import matplotlib.pyplot as plt
