@@ -356,3 +356,20 @@ def label_homogeneous_groups(populations,
                        medians=medians,
                        )
     return group_info
+
+def label_homogeneous_groups_pandas(data,
+                                    column_name,
+                                    **kwargs):
+    """perform statistical comparisons on a pandas DataFrame object.
+
+    This calls :func:`label_homogeneous_groups` after using the
+    groupby() method on the data.
+    """
+    names = []
+    values = []
+    for level, group in data.groupby(column_name):
+        names.append( level )
+        values.append( group['value'].values )
+        group_info = label_homogeneous_groups( values, **kwargs )
+    group_info['group_names']=names
+    return group_info
