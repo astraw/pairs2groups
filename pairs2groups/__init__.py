@@ -86,6 +86,8 @@ http://github.com/astraw/pairs2groups
 """
 import pairs2groups.util as util
 
+__version__ = '1.0.0' # also ../setup.py and ../doc-src/conf.py
+
 def find_homogeneous_groups( different_pairs, N_items ):
     """Find all homogeneous groups of not-different pairs.
 
