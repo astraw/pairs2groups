@@ -311,12 +311,13 @@ def label_homogeneous_groups(populations,
                 else:
                     raise err
 
-            if two_tailed:
-                p = p1*2
-            else:
-                p = p1
             if fail:
                 p = np.nan
+            else:
+                if two_tailed:
+                    p = p1*2
+                else:
+                    p = p1
 
             p_values[i,j] = p
             sig = significance_level/n_comparisons # Bonferroni correction
