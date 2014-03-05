@@ -302,11 +302,21 @@ def label_homogeneous_groups(populations,
             A = populations[i]
             B = populations[j]
 
-            U,p1=scipy.stats.mannwhitneyu(A,B)
+            fail = False
+            try:
+                U,p1=scipy.stats.mannwhitneyu(A,B)
+            except ValueError as err:
+                if err.message =='All numbers are identical in amannwhitneyu':
+                    fail = True
+                else:
+                    raise err
+
             if two_tailed:
                 p = p1*2
             else:
                 p = p1
+            if fail:
+                p = np.nan
 
             p_values[i,j] = p
             sig = significance_level/n_comparisons # Bonferroni correction
