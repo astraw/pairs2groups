@@ -360,7 +360,8 @@ def label_homogeneous_groups(populations,
     return group_info
 
 def label_homogeneous_groups_pandas(data,
-                                    column_name,
+                                    groupby_column_name,
+                                    value_column_name='value',
                                     **kwargs):
     """perform statistical comparisons on a pandas DataFrame object.
 
@@ -369,9 +370,9 @@ def label_homogeneous_groups_pandas(data,
     """
     names = []
     values = []
-    for level, group in data.groupby(column_name):
+    for level, group in data.groupby(groupby_column_name):
         names.append( level )
-        values.append( group['value'].values )
+        values.append( group[value_column_name].values )
         group_info = label_homogeneous_groups( values, **kwargs )
     group_info['group_names']=names
     return group_info
