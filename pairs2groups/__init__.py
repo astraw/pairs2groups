@@ -233,10 +233,11 @@ def label_homogeneous_groups(populations,
                              significance_level=0.05,
                              two_tailed = True,
                              force_letter = True,
+                             test = 'mannwhitneyu',
                              ):
     """perform statistical comparisons and call :func:`find_homogeneous_groups`
 
-    The statistical test used is the Mann Whitney U.
+    The statistical test used is specificed by the parameter 'test'.
 
     Parameters
     ----------
@@ -248,6 +249,8 @@ def label_homogeneous_groups(populations,
         Whether the comparison is two-tailed.
     force_letter : bool, optional
         If true (the default), each population gets assigned a letter
+    test         : string, optional
+        The test to use. (Default: 'mannwhitneyu'. Also 'kruskal'.)
 
     Returns
     -------
@@ -294,6 +297,7 @@ def label_homogeneous_groups(populations,
     diff_pairs = []
     p_values = np.nan*np.ones( (len(populations), len(populations)))
     medians = [ np.median( x ) for x in populations ]
+    num_samples = [ len( x ) for x in populations ]
     for i in range(len(populations)):
         for j in range(len(populations)):
             if not i < j:
@@ -302,22 +306,29 @@ def label_homogeneous_groups(populations,
             A = populations[i]
             B = populations[j]
 
-            fail = False
-            try:
-                U,p1=scipy.stats.mannwhitneyu(A,B)
-            except ValueError as err:
-                if err.message =='All numbers are identical in amannwhitneyu':
-                    fail = True
-                else:
-                    raise err
-
-            if fail:
-                p = np.nan
+            if test=='kruskal':
+                if not two_tailed:
+                    raise NotImplementedError('')
+                h,p = scipy.stats.kruskal(A,B)
             else:
-                if two_tailed:
-                    p = p1*2
+                if test != 'mannwhitneyu':
+                    raise ValueError('unknown test %s'%test)
+                fail = False
+                try:
+                    U,p1=scipy.stats.mannwhitneyu(A,B)
+                except ValueError as err:
+                    if err.message =='All numbers are identical in amannwhitneyu':
+                        fail = True
+                    else:
+                        raise err
+
+                if fail:
+                    p = np.nan
                 else:
-                    p = p1
+                    if two_tailed:
+                        p = p1*2
+                    else:
+                        p = p1
 
             p_values[i,j] = p
             sig = significance_level/n_comparisons # Bonferroni correction
@@ -367,6 +378,7 @@ def label_homogeneous_groups(populations,
                        group_strings=group_strs,
                        p_values=p_values,
                        medians=medians,
+                       num_samples=num_samples,
                        )
     return group_info
 
